@@ -1,11 +1,11 @@
 const joi = require("joi");
 
 const users = joi.object({
-  name: joi.string().required(),
-  email: joi.string().required(),
-  mobileNumber: joi.number().required(),
-  weight: joi.number().required(),
-  height: joi.number().required()
+  name: joi.string(),
+  email: joi.string(),
+  mobileNumber: joi.number(),
+  weight: joi.number(),
+  height: joi.number(),
 })
 
 const UserValidations = {
