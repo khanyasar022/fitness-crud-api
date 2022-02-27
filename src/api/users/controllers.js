@@ -3,6 +3,7 @@ const response = require("../../utils/response")
 const validate = require("../../utils/validate")
 const UserValidations = require('./validations')
 const UserService = require('../../services/users')
+const User = require("../../models/userSchema")
 
 const userPost = async (req, res, next) => {
     try {
@@ -59,13 +60,39 @@ const userUpdate = async (req, res, next) => {
         const userId = req.params.id
         const updatedUser = await UserService.updateUser(userId, data)
         return response(res, 1, updatedUser, 200)
-      } else {
-        const data = {
-            name: params.name,
-            email: params.email,
-            mobileNumber: params.mobileNumber,
-        }
+      } else if(params.weight === null && params.height !== null) {
         const userId = req.params.id
+        const user = await User.findById(userId)
+        let bmi = user.weight / Math.pow(params.height, 2)
+        const data = {
+          name: params.name,
+          email: params.email,
+          mobileNumber: params.mobileNumber,
+          height: params.height,
+          bmi: bmi
+        }
+        const updatedUser = await UserService.updateUser(userId, data)
+        return response(res, 1, updatedUser, 200)
+      } else if(params.weight !== null && params.height === null) {
+        const userId = req.params.id
+        const user = await User.findById(userId)
+        let bmi = params.weight / Math.pow(user.height, 2)
+        const data = {
+          name: params.name,
+          email: params.email,
+          mobileNumber: params.mobileNumber,
+          weight: params.weight,
+          bmi: bmi
+        }
+        const updatedUser = await UserService.updateUser(userId, data)
+        return response(res, 1, updatedUser, 200)
+      } else {
+        const userId = req.params.id
+        const data = {
+          name: params.name,
+          email: params.email,
+          mobileNumber: params.mobileNumber,
+        }
         const updatedUser = await UserService.updateUser(userId, data)
         return response(res, 1, updatedUser, 200)
       }
