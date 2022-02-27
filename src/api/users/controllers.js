@@ -46,7 +46,7 @@ const userGet = async (req, res, next) => {
 const userUpdate = async (req, res, next) => {
     try {
       const params = validate(UserValidations.users, req.body)
-      if(params.weight !== null || params.height !== null) {
+      if(params.weight !== null && params.height !== null) {
         let bmi = params.weight / Math.pow(params.height, 2)
         const data = {
             name: params.name,
