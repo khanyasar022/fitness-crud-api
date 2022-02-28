@@ -3,11 +3,14 @@ const response = require('../../utils/response')
 const validate = require('../../utils/validate')
 const RsvpServices = require('../../services/rsvps')
 const RsvpValidations = require('./validations')
+const Rsvp = require('../../models/rsvpSchema')
 
 const createRsvp = async (req, res, next) => {
     try {
         const params = validate(RsvpValidations.rsvpCreate, req.body)
         if(params instanceof Error) throw new BadRequest(params.message)
+        const alreadyExist = await Rsvp.findOne({eventId: params.eventId, userId: params.userId, status: params.status})
+        if(alreadyExist) return response(res, 0, 'already exists', 400)
         const data = {
             eventId: params.eventId,
             userId: params.userId,

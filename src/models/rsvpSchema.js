@@ -10,9 +10,10 @@ const rsvpSchema = new mongoose.Schema({
         ref: "User"
     },
     status: {
-        type: String
+        type: String,
+        enum: ["confirmed", "rejected"]
     }
-})
+}, { timestamps: true })
 
 const Rsvp = new mongoose.model('Rsvp', rsvpSchema)
 
