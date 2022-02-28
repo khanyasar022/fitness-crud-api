@@ -47,7 +47,7 @@ const userGet = async (req, res, next) => {
 const userUpdate = async (req, res, next) => {
     try {
       const params = validate(UserValidations.users, req.body)
-      if(params.weight !== null && params.height !== null) {
+      if(params.weight && params.height) {
         let bmi = params.weight / Math.pow(params.height, 2)
         const data = {
             name: params.name,
@@ -60,7 +60,7 @@ const userUpdate = async (req, res, next) => {
         const userId = req.params.id
         const updatedUser = await UserService.updateUser(userId, data)
         return response(res, 1, updatedUser, 200)
-      } else if(params.weight === null && params.height !== null) {
+      } else if(!params.weight && params.height) {
         const userId = req.params.id
         const user = await User.findById(userId)
         let bmi = user.weight / Math.pow(params.height, 2)
@@ -73,7 +73,7 @@ const userUpdate = async (req, res, next) => {
         }
         const updatedUser = await UserService.updateUser(userId, data)
         return response(res, 1, updatedUser, 200)
-      } else if(params.weight !== null && params.height === null) {
+      } else if(params.weight && !params.height) {
         const userId = req.params.id
         const user = await User.findById(userId)
         let bmi = params.weight / Math.pow(user.height, 2)
