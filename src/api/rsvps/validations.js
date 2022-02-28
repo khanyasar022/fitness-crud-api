@@ -1,9 +1,9 @@
 const Joi = require('joi')
 
 const rsvpCreate = Joi.object({
-    eventId: Joi.string().required(),
-    userId: Joi.string().required(),
-    status: Joi.string().required()
+    eventId: Joi.string(),
+    userId: Joi.string(),
+    status: Joi.string()
 })
 
 const RsvpValidations = {
