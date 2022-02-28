@@ -7,7 +7,7 @@ const User = require("../../models/userSchema")
 
 const userPost = async (req, res, next) => {
     try {
-        const params = validate(UserValidations.users, req.body)
+        const params = validate(UserValidations.userCreate, req.body)
         if(params instanceof Error) throw new BadRequest(params.message)
         let bmi = params.weight / Math.pow(params.height, 2)
         const data = {
@@ -46,7 +46,7 @@ const userGet = async (req, res, next) => {
 
 const userUpdate = async (req, res, next) => {
     try {
-      const params = validate(UserValidations.users, req.body)
+      const params = validate(UserValidations.userUpdate, req.body)
       if(params.weight && params.height) {
         let bmi = params.weight / Math.pow(params.height, 2)
         const data = {
