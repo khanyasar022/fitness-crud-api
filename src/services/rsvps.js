@@ -9,8 +9,18 @@ const createRsvp = async (data) => {
     }
 }
 
+const getRsvp = async (userId, eventId) => {
+    try {
+        const allRsvp = await Rsvp.findOne({ userId: userId, eventId: eventId}).populate('eventId').populate('userId')
+        return allRsvp
+    } catch(error) {
+        console.log(`get rsvp error ${error}`)
+    }
+}
+
 const RsvpServices = {
-    createRsvp
+    createRsvp,
+    getRsvp
 }
 
 module.exports = RsvpServices

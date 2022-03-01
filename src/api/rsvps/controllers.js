@@ -4,6 +4,7 @@ const validate = require('../../utils/validate')
 const RsvpServices = require('../../services/rsvps')
 const RsvpValidations = require('./validations')
 const Rsvp = require('../../models/rsvpSchema')
+const { all } = require('./routes')
 
 const createRsvp = async (req, res, next) => {
     try {
@@ -23,7 +24,19 @@ const createRsvp = async (req, res, next) => {
     }
 }
 
+const getRsvp = async (req, res, next) => {
+    try {
+        const userId = req.params.userId
+        const eventId = req.params.eventId
+        const allRsvp = await RsvpServices.getRsvp(userId, eventId)
+        return response(res, 1, allRsvp, 200)
+    } catch(error) {
+        next(error)
+    }
+}
+
 const RsvpControllers = {
-    createRsvp
+    createRsvp,
+    getRsvp
 }
 module.exports = RsvpControllers
