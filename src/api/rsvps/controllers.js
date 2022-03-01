@@ -36,8 +36,7 @@ const createRsvp = async (req, res, next) => {
 const getRsvp = async (req, res, next) => {
     try {
         const userId = req.params.userId
-        const eventId = req.params.eventId
-        const allRsvp = await RsvpServices.getRsvp(userId, eventId)
+        const allRsvp = await RsvpServices.getRsvp(userId)
         return response(res, 1, allRsvp, 200)
     } catch(error) {
         next(error)
