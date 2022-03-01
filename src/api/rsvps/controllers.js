@@ -10,7 +10,7 @@ const createRsvp = async (req, res, next) => {
         const params = validate(RsvpValidations.rsvpCreate, req.body)
         if(params instanceof Error) throw new BadRequest(params.message)
         const alreadyExist = await Rsvp.findOne({eventId: params.eventId, userId: params.userId, status: params.status})
-        if(alreadyExist) return response(res, 0, 'already exists', 400)
+        if(alreadyExist) return response(res, 0, alreadyExist, 400)
         const updateQuery = await Rsvp.findOne({eventId: params.eventId, userId: params.userId})
         if(updateQuery) {
             const data = {

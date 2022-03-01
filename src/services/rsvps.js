@@ -6,7 +6,7 @@ const createRsvp = async (data) => {
 }
 
 const updateRsvp = async (data) => {
-        const updatedRsvp = await Rsvp.findOneAndUpdate({userId: data.userId, eventId: data.eventId})
+        const updatedRsvp = await Rsvp.findOneAndUpdate({userId: data.userId, eventId: data.eventId}, {$set: data}, {new: true})
         return updatedRsvp
 }
 
